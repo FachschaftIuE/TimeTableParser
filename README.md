@@ -14,7 +14,7 @@ Python 3.7.2 wird verwendet, um dieses Projekt zu realisieren.
 
 ## Zu installierende Libraries
 
-Folgende Bibliotheken werden benötigt um dieses Projekt starten zu können
+Die benötigten Bibliotheken installiert man wie folgt:
 ```bash
 pip install -r requirements.txt
 ```
@@ -31,9 +31,9 @@ The following IDEs were used in the development of this project:
 
 Python 3.7.2 was used in the realization of the project
 
-## Librarys to install
+## Libraries to install
 
-The following librarys are needed to run this program
+Install the needed libraries to run this program
 ```bash
 pip install -r requirements.txt
 ```
