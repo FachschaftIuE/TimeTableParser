@@ -16,10 +16,7 @@ Python 3.7.2 wird verwendet, um dieses Projekt zu realisieren.
 
 Folgende Bibliotheken werden benötigt um dieses Projekt starten zu können
 ```bash
-python3 -m pip install pdfquery
-python3 -m pip install pytz
-python3 -m pip install ics
-python3 -m pip install termcolor
+pip install -r requirements.txt
 ```
 
 ## English
@@ -38,8 +35,5 @@ Python 3.7.2 was used in the realization of the project
 
 The following librarys are needed to run this program
 ```bash
-python3 -m pip install pdfquery
-python3 -m pip install pytz
-python3 -m pip install ics
-python3 -m pip install termcolor
+pip install -r requirements.txt
 ```
