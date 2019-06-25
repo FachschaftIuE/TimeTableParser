@@ -29,7 +29,7 @@ pip install -r requirements.txt
   python python-scripts/main.py
 	```
 * Es folgt eine Konsolenabfrage zu den gewünschten Modulen.
-* Formatierter Stundenplan ist in dem Output-Ordner in Form von einer `.csv`- oder `.ics`-Datei, je nach Wunsch, zu im Output-Ordner zu finden (`data/output`)
+* Formatierter Stundenplan ist in dem Output-Ordner in Form von einer `.csv`- oder `.ics`-Datei, zu finden (`data/output`)
 * Importiere das gewünschte Format in den Kalender
 * `.ics` = für Apple Anwendungen 
 * `.csv` = für Meisten anderen Kalenderanwendungen
