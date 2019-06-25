@@ -6,8 +6,8 @@ import time
 from time import mktime
 from datetime import datetime
 
-input_folder = "../data/input"
-cache_folder = "../data/cache"
+input_folder = "data/input"
+cache_folder = "data/cache"
 
 
 def read_input_folder():
