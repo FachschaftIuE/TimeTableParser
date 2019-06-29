@@ -23,7 +23,7 @@ def create_csv(data: List[DataItem], filename: str = "calendar"):
     head_row = ['Subject', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Description', 'Location']
 
     # Create .csv-file
-    with open('data/output/' + filename + '.csv', 'w', newline='', encoding='utf-8') as csv_file:
+    with open('../data/output/' + filename + '.csv', 'w', newline='', encoding='utf-8') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(head_row)
 
@@ -85,7 +85,7 @@ def create_ics(data: List[DataItem], filename: str = "calendar"):
         c.events.add(e)
 
     # Create .ics-file
-    with open('data/output/' + filename + '.ics', 'w', newline='', encoding='utf-8') as ics_file:
+    with open('../data/output/' + filename + '.ics', 'w', newline='', encoding='utf-8') as ics_file:
         ics_file.writelines(c)
 
 
@@ -105,7 +105,7 @@ def create_json(data: str, filename: str):
     json.loads(data)
 
     # Create .json-file
-    with open('data/cache/' + filename + '.json', 'w', newline='', encoding='utf-8') as json_file:
+    with open('../data/cache/' + filename + '.json', 'w', newline='', encoding='utf-8') as json_file:
         json_file.writelines(data)
 
     json_file.close()
@@ -113,7 +113,7 @@ def create_json(data: str, filename: str):
 
 def create_json_from_data_item(data_item_list: List[DataItem], filename):
 
-    with open('data/cache/' + filename + '.json', 'w', newline='', encoding='utf-8') as json_file:
+    with open('../data/cache/' + filename + '.json', 'w', newline='', encoding='utf-8') as json_file:
         json_file.writelines('[')
 
         temp_list = list()
