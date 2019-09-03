@@ -5,22 +5,24 @@ import os.path
 import time
 from time import mktime
 from datetime import datetime
+import pathlib
 
-input_folder = "data/input"
-cache_folder = "data/cache"
+input_folder = pathlib.Path.cwd().joinpath('data', 'input')
+cache_folder = pathlib.Path.cwd().joinpath('data', 'cache')
 
 
 def read_input_folder():
-    input_files = glob.glob(input_folder + "/*.pdf")
+    input_files = input_folder.rglob('*.pdf')
+    # input_files = glob.glob(input_folder + "/*.pdf")
 
     files = list()
 
     for file in input_files:
-        temp_file = file.replace(".pdf", "")
-        temp_file = temp_file.replace(input_folder + "/", "")   # Replace for MAC path
-        temp_file = temp_file.replace(input_folder + "\\", "")  # Replace for Windows path
+        temp_file = file.name.replace(".pdf", "")
+        # temp_file = temp_file.replace(input_folder + "/", "")   # Replace for MAC path
+        # temp_file = temp_file.replace(input_folder + "\\", "")  # Replace for Windows path
 
-        temp_dict = {"file_name": temp_file, "file_path": input_folder + "/" + temp_file + ".pdf", "file_edit": None}
+        temp_dict = {"file_name": temp_file, "file_path": file, "file_edit": None}
         temp_dict["file_edit"] = datetime.fromtimestamp(mktime(time.localtime(os.path.getmtime(temp_dict["file_path"]))))
 
         files.append(temp_dict)
@@ -29,16 +31,17 @@ def read_input_folder():
 
 
 def read_cache_folder():
-    cache_files = glob.glob(cache_folder + "/*.json")
+    cache_files = cache_folder.rglob('*.json')
+    # cache_files = glob.glob(cache_folder + "/*.json")
 
     files = list()
 
     for file in cache_files:
-        temp_file = file.replace(".json", "")
-        temp_file = temp_file.replace(cache_folder + "/", "")   # Replace for MAC path
-        temp_file = temp_file.replace(cache_folder + "\\", "")  # Replace for Windows path
+        temp_file = file.name.replace(".json", "")
+        # temp_file = temp_file.replace(cache_folder + "/", "")   # Replace for MAC path
+        # temp_file = temp_file.replace(cache_folder + "\\", "")  # Replace for Windows path
 
-        temp_dict = {"file_name": temp_file, "file_path": cache_folder + "/" + temp_file + ".json", "file_edit": None}
+        temp_dict = {"file_name": temp_file, "file_path": file, "file_edit": None}
         temp_dict["file_edit"] = datetime.fromtimestamp(mktime(time.localtime(os.path.getmtime(temp_dict["file_path"]))))
 
         files.append(temp_dict)
@@ -54,7 +57,7 @@ def file_handler(input_files: List[dict], cache_files: List[dict]):
         print("\nID\tPDF")
 
         for index in range(input_files.__len__()):
-            print(colored((index + 1).__str__(), 'yellow', attrs=['bold']) + "\t" + input_files[index]["file_name"])
+            print(f"{colored((index + 1).__str__(), 'yellow', attrs=['bold'])} \t {input_files[index]['file_name']}")
 
         print("\n" + colored("Which files do you want to parse?", attrs=['reverse']))
         print("Please select file " + colored("ID", 'yellow', attrs=['bold']) + " to add")
