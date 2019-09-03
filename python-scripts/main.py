@@ -10,8 +10,10 @@ from helper.folder_manager import read_input_folder, read_cache_folder, file_han
 from helper.data_output import *
 from helper.data_item_from_json import data_item_from_json
 from termcolor import *
+import colorama
 
 def main():
+    colorama.init()
     show_application_disclaimer()
 
     data = list()
