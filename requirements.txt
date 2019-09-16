@@ -2,3 +2,4 @@ pdfquery
 pytz
 ics
 termcolor
+colorama

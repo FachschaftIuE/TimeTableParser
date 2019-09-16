@@ -10,8 +10,10 @@ from helper.folder_manager import read_input_folder, read_cache_folder, file_han
 from helper.data_output import *
 from helper.data_item_from_json import data_item_from_json
 from termcolor import *
+import colorama
 
 def main():
+    colorama.init()
     show_application_disclaimer()
 
     data = list()
@@ -21,11 +23,11 @@ def main():
     # security question!
     if files is not None:
         if files["files_to_parse"].__len__() == 0 and files["files_to_load"].__len__() == 0:
-            print("\n" + colored("No file selected, program shutdown!", 'red'))
+            print(f'\n {colored("No file selected, program shutdown!", "red")}')
             return
 
         if files["files_to_parse"].__len__() > 0:
-            print("Start Parsing (This will take a moment, grab a coffee!)")
+            print('Start Parsing (This will take a moment, grab a coffee!)')
 
         for file_index in range(files["files_to_parse"].__len__()):
             page_count = get_pdf_pages(files["files_to_parse"][file_index]["file_path"])
