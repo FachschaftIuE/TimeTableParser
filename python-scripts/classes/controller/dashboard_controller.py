@@ -1,2 +1,2 @@
-class DashboardController:
+class GuiController:
     a = 1

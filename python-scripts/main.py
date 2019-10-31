@@ -1,8 +1,8 @@
-from classes.gui.dashboard import Dashboard
+from classes.view.gui import Gui
 
 
 def main():
-    Dashboard().show()
+    Gui().show()
     return 0
 
     # def main():
