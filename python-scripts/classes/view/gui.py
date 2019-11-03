@@ -5,7 +5,7 @@ from classes.controller.dashboard_controller import GuiController
 
 # constants
 title = "TimeTableParser"
-height = 625
+height = 650
 width = 300
 
 
@@ -50,7 +50,7 @@ class Gui:
         self.input_files.pack(side=tk.TOP)
 
         # label
-        input_file_label = tk.Label(self.input_files, text="TimeTables")
+        input_file_label = tk.Label(self.input_files, text="TimeTables", font='Helvetica 10 bold')
         input_file_label.pack(side=tk.TOP)
 
         # list of input files
@@ -72,29 +72,31 @@ class Gui:
         # endregion
 
         # region settings section
-
         settings_section = tk.Frame(self.root)
         settings_section.pack(pady=20)
 
         # label
-        settings_label = tk.Label(settings_section, text="Settings")
+        settings_label = tk.Label(settings_section, text="Settings", font='Helvetica 10 bold')
         settings_label.grid(row=0, column=0, columnspan=2)
 
         # checkboxes
         use_cache_checkbox = tk.Checkbutton(settings_section)
         use_cache_checkbox.grid(row=1, column=0)
-        use_cache_label = tk.Label(settings_section, text="Use cache from previous parsing if available?")
+        use_cache_label = tk.Label(settings_section, text="Use previous cache?\n"
+                                                          "Speeds up process if file was parsed before.")
         use_cache_label.grid(row=1, column=1)
 
-        delete_cache_checkbox = tk.Checkbutton(settings_section)
-        delete_cache_checkbox.grid(row=2, column=0)
-        delete_cache_label = tk.Label(settings_section, text="Delete cache after parsing?")
-        delete_cache_label.grid(row=2, column=1)
+        export_ics_checkbox = tk.Checkbutton(settings_section)
+        export_ics_checkbox.grid(row=2, column=0)
+        export_ics_label = tk.Label(settings_section, text="Export as .ics-file?\n"
+                                                           "If unchecked the output type will be csv.")
+        export_ics_label.grid(row=2, column=1)
 
-        crash_checkbox = tk.Checkbutton(settings_section)
-        crash_checkbox.grid(row=3, column=0)
-        crash_label = tk.Label(settings_section, text="Crash randomly?")
-        crash_label.grid(row=3, column=1)
+        export_ics_checkbox = tk.Checkbutton(settings_section)
+        export_ics_checkbox.grid(row=3, column=0)
+        export_ics_label = tk.Label(settings_section, text="Crash randomly?\n"
+                                                           "This does not actually do anything.")
+        export_ics_label.grid(row=3, column=1)
 
         # endregion
 
@@ -103,7 +105,7 @@ class Gui:
         parse_section.pack(pady=10)
 
         # parse label
-        parse_label = tk.Label(parse_section, text="Parse Timetable(s)")
+        parse_label = tk.Label(parse_section, text="Parse Timetable(s)", font='Helvetica 10 bold')
         parse_label.pack()
 
         # parse button
@@ -121,7 +123,7 @@ class Gui:
         tos_section = tk.Frame(self.root)
         tos_section.pack(pady=10)
 
-        tos_label = tk.Label(tos_section, text="Terms of Service / TOS")
+        tos_label = tk.Label(tos_section, text="Terms of Service / TOS", font='Helvetica 10 bold')
         tos_label.pack()
 
         tos_label = tk.Label(tos_section, text="The contents of the TimeTableParser (TTP)\n were compiled with the "
