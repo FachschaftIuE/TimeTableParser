@@ -2,10 +2,14 @@ from classes.view.gui import Gui
 
 
 def main():
-    Gui().show()
-    return 0
+    # region new main
 
-    # def main():
+    Gui().show()
+
+    # endregion
+
+    # # region old main
+    #
     # colorama.init()
     # show_application_disclaimer()
     #
@@ -54,6 +58,8 @@ def main():
     #     filter_data_list(data, user_select(create_data_dictionary(data)))
     #
     #     format_select(data)
+    #
+    # # endregion
 
 
 if __name__ == "__main__":

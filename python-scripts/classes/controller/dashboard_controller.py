@@ -1,4 +1,3 @@
-import ntpath
 from tkinter import messagebox
 
 from classes.controller.timetable_controller import TimetableController
@@ -7,12 +6,8 @@ from classes.models.timetable import Timetable
 from classes.view import gui
 from helper.data_item_from_json import data_item_from_json
 from helper.data_output import create_json_from_data_item
+from helper.folder_manager import file_handler, read_cache_folder, convert_files
 from helper.get_pdf_pages import get_pdf_pages
-
-
-def path_leaf(path):
-    head, tail = ntpath.split(path)
-    return tail or ntpath.basename(head)
 
 
 class GuiController:
@@ -35,20 +30,16 @@ class GuiController:
 
         messagebox.showinfo(gui.title, "This process may take a while. Grab a something to drink! 😊")
 
-        data = self.create_and_cache_json()
-
-        for file in self.files:
-            data_item_from_json(data, file)
-
-        messagebox.showinfo(gui.title, "Done parsing! 😊")
-
-    def create_and_cache_json(self):
         data = list()
-        for file in self.files:
-            page_count = get_pdf_pages(file)
+        files = file_handler(convert_files(self.files, '.pdf'), read_cache_folder(), use_cache)
+
+        for file_index in range(files["files_to_parse"].__len__()):
+            page_count = get_pdf_pages(files["files_to_parse"][file_index]["file_path"])
 
             for page in range(page_count):
-                file_container = Loader(file, path_leaf(file), page)
+                file_container = Loader(files["files_to_parse"][file_index]["file_path"],
+                                        files["files_to_parse"][file_index]["file_name"],
+                                        page)
 
                 timetable = Timetable()
                 t_controller = TimetableController(file_container, timetable)
@@ -58,6 +49,9 @@ class GuiController:
                 timetable.get_weeks()
                 timetable.find_modules(data)
 
-            create_json_from_data_item(data, file)
-        return data
+            create_json_from_data_item(data, files["files_to_parse"][file_index]["file_name"])
 
+        for file_index in range(files["files_to_load"].__len__()):
+            data_item_from_json(data, files["files_to_load"][file_index]["file_path"])
+
+        messagebox.showinfo(gui.title, "Parsing finished! 😊")

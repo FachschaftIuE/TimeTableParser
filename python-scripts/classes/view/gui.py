@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from classes.controller.dashboard_controller import GuiController, path_leaf
+from classes.controller.dashboard_controller import GuiController
+from helper.folder_manager import path_leaf
 
 # constants
 title = "TimeTableParser"
