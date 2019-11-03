@@ -4,7 +4,7 @@ from classes.controller.dashboard_controller import GuiController
 
 # constants
 title = "TimeTableParser"
-height = 600
+height = 475
 width = 300
 
 
@@ -93,11 +93,16 @@ class Gui:
         parse_section = tk.Frame(self.root)
         parse_section.pack(pady=10)
 
-        # TODO parse label
-        # TODO TOS checkbox
+        # parse label
+        parse_label = tk.Label(parse_section, text="Parse Timetable(s)")
+        parse_label.pack()
 
         # parse button
         parse_button = tk.Button(parse_section, text="Parse")
-        parse_button.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        parse_button.pack()
+
+        # TOS checkbox
+        tos_checkbox = tk.Checkbutton(parse_section, text="Agree to TOS")
+        tos_checkbox.pack()
 
         # endregion
