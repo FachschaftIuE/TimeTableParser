@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from classes.controller.dashboard_controller import GuiController
+from classes.controller.dashboard_controller import GuiController, path_leaf
 
 # constants
 title = "TimeTableParser"
@@ -14,7 +14,7 @@ class Gui:
     root = tk.Tk()
     input_section = tk.Frame(root)
     input_files = tk.Frame(input_section)
-    input_file_list = tk.Listbox(input_files)
+    input_file_list = tk.Listbox(input_files, width=40)
 
     def __init__(self):
         self.root.title(title)
@@ -27,13 +27,17 @@ class Gui:
     def add_file(self):
         filename = filedialog.askopenfilename(title="Select a Timetable", filetypes=[("Timetables", "*.pdf")])
         if filename != "":
-            self.controller.inputs.append(filename)
+            if not self.controller.inputs.__contains__(filename):
+                self.controller.inputs.append(filename)
             self.refresh_inputs()
 
     def refresh_inputs(self):
+        # clear listbox
         self.input_file_list.delete(0, tk.END)
-        for inputFile in self.controller.inputs:
-            self.input_file_list.insert(tk.END, str(inputFile))
+
+        # add files
+        for input_file in self.controller.inputs:
+            self.input_file_list.insert(tk.END, path_leaf(input_file))
 
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()
