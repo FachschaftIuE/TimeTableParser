@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 
 from classes.controller.dashboard_controller import GuiController
 
@@ -11,6 +12,9 @@ width = 300
 class Gui:
     controller = GuiController()
     root = tk.Tk()
+    input_section = tk.Frame(root)
+    input_files = tk.Frame(input_section)
+    input_file_list = tk.Listbox(input_files)
 
     def __init__(self):
         self.root.title(title)
@@ -20,10 +24,16 @@ class Gui:
         self.build_ui()
         self.root.mainloop()
 
-    def refresh_inputs(self, listbox):
-        listbox.delete(0, tk.END)
+    def add_file(self):
+        filename = filedialog.askopenfilename(title="Select a Timetable", filetypes=[("Timetables", "*.pdf")])
+        if filename != "":
+            self.controller.inputs.append(filename)
+            self.refresh_inputs()
+
+    def refresh_inputs(self):
+        self.input_file_list.delete(0, tk.END)
         for inputFile in self.controller.inputs:
-            listbox.insert(tk.END, str(inputFile))
+            self.input_file_list.insert(tk.END, str(inputFile))
 
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()
@@ -35,35 +45,28 @@ class Gui:
     def build_ui(self):
         # region input section
 
-        input_section = tk.Frame(self.root)
-        input_section.pack(pady=10)
+        self.input_section.pack(pady=10)
 
-        input_files = tk.Frame(input_section)
-        input_files.pack(side=tk.TOP)
+        self.input_files.pack(side=tk.TOP)
 
         # label
-        input_file_label = tk.Label(input_files, text="TimeTables")
+        input_file_label = tk.Label(self.input_files, text="TimeTables")
         input_file_label.pack(side=tk.TOP)
 
         # list of input files
-        input_file_list = tk.Listbox(input_files)
-        input_file_list.pack(side=tk.LEFT, fill=tk.BOTH)
-        input_file_list_scrollbar = tk.Scrollbar(input_files)
+        self.input_file_list.pack(side=tk.LEFT, fill=tk.BOTH)
+        input_file_list_scrollbar = tk.Scrollbar(self.input_files)
         input_file_list_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        input_file_list_scrollbar.config(command=input_file_list.yview)
-        input_file_list.config(yscrollcommand=input_file_list_scrollbar.set)
-
-        # TODO remove dummy data
-        for line in range(100):
-            input_file_list.insert(tk.END, "#" + str(line))
+        input_file_list_scrollbar.config(command=self.input_file_list.yview)
+        self.input_file_list.config(yscrollcommand=input_file_list_scrollbar.set)
 
         # input buttons
-        input_section_buttons = tk.Frame(input_section)
+        input_section_buttons = tk.Frame(self.input_section)
         input_section_buttons.pack(side=tk.BOTTOM)
         clear_button = tk.Button(input_section_buttons, text="Clear",
-                                 command=lambda: [self.controller.clear_inputs(), self.refresh_inputs(input_file_list)])
+                                 command=lambda: [self.controller.clear_inputs(), self.refresh_inputs()])
         clear_button.pack(side=tk.LEFT, padx=10)
-        add_button = tk.Button(input_section_buttons, text="Add TimeTable")
+        add_button = tk.Button(input_section_buttons, text="Add TimeTable", command=self.add_file)
         add_button.pack(side=tk.RIGHT, padx=10)
 
         # endregion
@@ -108,7 +111,7 @@ class Gui:
         parse_button.pack(pady=5)
 
         # TOS checkbox
-        tos_checkbox = tk.Checkbutton(parse_section, text="Agree to TOS")
+        tos_checkbox = tk.Checkbutton(parse_section, text="Agree to Terms Of Service")
         tos_checkbox.pack()
 
         # endregion
