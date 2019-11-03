@@ -13,3 +13,9 @@ class GuiController:
 
     def clear_inputs(self):
         self.inputs.clear()
+
+    def parse_inputs(self, use_cache, export_as_ics, tos):
+        print(use_cache)
+        print(export_as_ics)
+        print(tos)
+

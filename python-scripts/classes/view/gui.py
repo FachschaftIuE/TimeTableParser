@@ -19,6 +19,9 @@ class Gui:
     def __init__(self):
         self.root.title(title)
         self.center_window_on_screen()
+        self.use_cache = tk.BooleanVar()
+        self.export_as_ics = tk.BooleanVar()
+        self.tos = tk.BooleanVar()
 
     def show(self):
         self.build_ui()
@@ -26,9 +29,8 @@ class Gui:
 
     def add_file(self):
         filename = filedialog.askopenfilename(title="Select a Timetable", filetypes=[("Timetables", "*.pdf")])
-        if filename != "":
-            if not self.controller.inputs.__contains__(filename):
-                self.controller.inputs.append(filename)
+        if filename != "" and not self.controller.inputs.__contains__(filename):
+            self.controller.inputs.append(filename)
             self.refresh_inputs()
 
     def refresh_inputs(self):
@@ -50,12 +52,11 @@ class Gui:
         # region input section
 
         self.input_section.pack(pady=10)
-
-        self.input_files.pack(side=tk.TOP)
+        self.input_files.pack()
 
         # label
         input_file_label = tk.Label(self.input_files, text="TimeTables", font='Helvetica 10 bold')
-        input_file_label.pack(side=tk.TOP)
+        input_file_label.pack()
 
         # list of input files
         self.input_file_list.pack(side=tk.LEFT, fill=tk.BOTH)
@@ -84,23 +85,23 @@ class Gui:
         settings_label.grid(row=0, column=0, columnspan=2)
 
         # checkboxes
-        use_cache_checkbox = tk.Checkbutton(settings_section)
+        use_cache_checkbox = tk.Checkbutton(settings_section, variable=self.use_cache)
+        use_cache_checkbox.toggle()
         use_cache_checkbox.grid(row=1, column=0)
         use_cache_label = tk.Label(settings_section, text="Use previous cache?\n"
                                                           "Speeds up process if file was parsed before.")
         use_cache_label.grid(row=1, column=1)
 
-        export_ics_checkbox = tk.Checkbutton(settings_section)
+        export_ics_checkbox = tk.Checkbutton(settings_section, variable=self.export_as_ics)
         export_ics_checkbox.grid(row=2, column=0)
         export_ics_label = tk.Label(settings_section, text="Export as .ics-file?\n"
                                                            "If unchecked the output type will be csv.")
         export_ics_label.grid(row=2, column=1)
 
-        export_ics_checkbox = tk.Checkbutton(settings_section)
-        export_ics_checkbox.grid(row=3, column=0)
-        export_ics_label = tk.Label(settings_section, text="Crash randomly?\n"
-                                                           "This does not actually do anything.")
-        export_ics_label.grid(row=3, column=1)
+        crash_checkbox = tk.Checkbutton(settings_section)
+        crash_checkbox.grid(row=3, column=0)
+        crash_label = tk.Label(settings_section, text="Crash randomly?\nThis does not actually do anything.")
+        crash_label.grid(row=3, column=1)
 
         # endregion
 
@@ -113,11 +114,14 @@ class Gui:
         parse_label.pack()
 
         # parse button
-        parse_button = tk.Button(parse_section, text="Parse")
+        parse_button = tk.Button(parse_section, text="Parse",
+                                 command=lambda: [self.controller.parse_inputs(self.use_cache.get(),
+                                                                               self.export_as_ics.get(),
+                                                                               self.tos.get())])
         parse_button.pack(pady=5)
 
         # TOS checkbox
-        tos_checkbox = tk.Checkbutton(parse_section, text="Agree to Terms Of Service")
+        tos_checkbox = tk.Checkbutton(parse_section, text="Agree to Terms Of Service", variable=self.tos)
         tos_checkbox.pack()
 
         # endregion
