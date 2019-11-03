@@ -29,8 +29,8 @@ class Gui:
 
     def add_file(self):
         filename = filedialog.askopenfilename(title="Select a Timetable", filetypes=[("Timetables", "*.pdf")])
-        if filename != "" and not self.controller.inputs.__contains__(filename):
-            self.controller.inputs.append(filename)
+        if filename != "" and not self.controller.files.__contains__(filename):
+            self.controller.files.append(filename)
             self.refresh_inputs()
 
     def refresh_inputs(self):
@@ -38,7 +38,7 @@ class Gui:
         self.input_file_list.delete(0, tk.END)
 
         # add files
-        for input_file in self.controller.inputs:
+        for input_file in self.controller.files:
             self.input_file_list.insert(tk.END, path_leaf(input_file))
 
     def center_window_on_screen(self):
@@ -71,7 +71,7 @@ class Gui:
         clear_button = tk.Button(input_section_buttons, text="Clear",
                                  command=lambda: [self.controller.clear_inputs(), self.refresh_inputs()])
         clear_button.pack(side=tk.LEFT, padx=10)
-        add_button = tk.Button(input_section_buttons, text="Add TimeTable", command=self.add_file)
+        add_button = tk.Button(input_section_buttons, text="Add Timetable", command=self.add_file)
         add_button.pack(side=tk.RIGHT, padx=10)
 
         # endregion
