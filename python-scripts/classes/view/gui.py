@@ -20,6 +20,11 @@ class Gui:
         self.build_ui()
         self.root.mainloop()
 
+    def refresh_inputs(self, listbox):
+        listbox.delete(0, tk.END)
+        for inputFile in self.controller.inputs:
+            listbox.insert(tk.END, str(inputFile))
+
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
@@ -55,7 +60,8 @@ class Gui:
         # input buttons
         input_section_buttons = tk.Frame(input_section)
         input_section_buttons.pack(side=tk.BOTTOM)
-        clear_button = tk.Button(input_section_buttons, text="Clear")
+        clear_button = tk.Button(input_section_buttons, text="Clear",
+                                 command=lambda: [self.controller.clear_inputs(), self.refresh_inputs(input_file_list)])
         clear_button.pack(side=tk.LEFT, padx=10)
         add_button = tk.Button(input_section_buttons, text="Add TimeTable")
         add_button.pack(side=tk.RIGHT, padx=10)

@@ -1,2 +1,7 @@
 class GuiController:
-    a = 1
+
+    def __init__(self):
+        self.inputs = []
+
+    def clear_inputs(self):
+        self.inputs.clear()
