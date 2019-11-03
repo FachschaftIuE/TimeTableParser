@@ -4,7 +4,7 @@ from classes.controller.dashboard_controller import GuiController
 
 # constants
 title = "TimeTableParser"
-height = 475
+height = 625
 width = 300
 
 
@@ -99,10 +99,27 @@ class Gui:
 
         # parse button
         parse_button = tk.Button(parse_section, text="Parse")
-        parse_button.pack()
+        parse_button.pack(pady=5)
 
         # TOS checkbox
         tos_checkbox = tk.Checkbutton(parse_section, text="Agree to TOS")
         tos_checkbox.pack()
+
+        # endregion
+
+        # region TOS section
+
+        tos_section = tk.Frame(self.root)
+        tos_section.pack(pady=10)
+
+        tos_label = tk.Label(tos_section, text="Terms of Service / TOS")
+        tos_label.pack()
+
+        tos_label = tk.Label(tos_section, text="The contents of the TimeTableParser (TTP)\n were compiled with the "
+                                               "greatest possible care\n and in accordance with in the best of "
+                                               "conscience. \nNevertheless, the provider of this application\n does not"
+                                               " assume any liability\nfor the topicality, completeness and"
+                                               " correctness\n of the csv/ics files and other content provided.")
+        tos_label.pack()
 
         # endregion
