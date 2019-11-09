@@ -12,6 +12,9 @@ input_folder = pathlib.Path.cwd().joinpath('data', 'input')
 cache_folder = pathlib.Path.cwd().joinpath('data', 'cache')
 
 
+def get_cached_file_for(filename):
+    return pathlib.Path().joinpath(cache_folder, filename.replace('.pdf', '.json'))
+
 def convert_files(input_files, file_type):
     files = list()
 
