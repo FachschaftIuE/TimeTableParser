@@ -20,14 +20,20 @@ class GuiController:
 
     def clear_inputs(self):
         self.files.clear()
+        self.selectable_modules.clear()
+        self._parsed_data_items.clear()
 
     def create_calendar(self, agreed_to_tos, export_as_ics, selected_module_indices):
         if not agreed_to_tos:
             messagebox.showerror(gui.title, "You need to agree to the Terms Of Service to do that.")
             return
 
+        if len(self._parsed_data_items) == 0:
+            messagebox.showinfo(gui.title, "There are no modules to select.\nPlease parse a timetable.")
+            return
+
         if len(selected_module_indices) == 0:
-            messagebox.showinfo(gui.title, "There are no modules selected. "
+            messagebox.showinfo(gui.title, "There are no modules selected.\n"
                                            "Please select modules to fill the calendar with.")
             return
 

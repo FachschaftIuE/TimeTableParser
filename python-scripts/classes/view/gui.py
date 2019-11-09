@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from classes.controller.dashboard_controller import GuiController
+from classes.controller.gui_controller import GuiController
 from helper.folder_manager import path_leaf
 
 # constants
@@ -45,7 +45,7 @@ class Gui:
         for input_file in self.controller.files:
             self.input_file_list.insert(tk.END, path_leaf(input_file))
 
-    def refresh_data_items(self):
+    def refresh_modules(self):
         # clear data_item_chooser
         self.module_list.delete(0, tk.END)
 
@@ -81,7 +81,9 @@ class Gui:
         input_section_buttons = tk.Frame(self.input_section)
         input_section_buttons.pack(side=tk.BOTTOM)
         clear_button = tk.Button(input_section_buttons, text="Clear",
-                                 command=lambda: [self.controller.clear_inputs(), self.refresh_inputs()])
+                                 command=lambda: [self.controller.clear_inputs(),
+                                                  self.refresh_inputs(),
+                                                  self.refresh_modules()])
         clear_button.pack(side=tk.LEFT, padx=10)
         add_button = tk.Button(input_section_buttons, text="Add Timetable", command=self.add_file)
         add_button.pack(side=tk.RIGHT, padx=10)
@@ -121,13 +123,13 @@ class Gui:
         self.parse_section.pack(pady=10)
 
         # parse label
-        parse_label = tk.Label(self.parse_section, text="Parse Timetable(s)", font='Helvetica 10 bold')
+        parse_label = tk.Label(self.parse_section, text="Create Calendar", font='Helvetica 10 bold')
         parse_label.pack()
 
         # parse button
-        parse_button = tk.Button(self.parse_section, text="Parse",
+        parse_button = tk.Button(self.parse_section, text="Parse Timetable(s)",
                                  command=lambda: [self.controller.parse_inputs(self.use_cache.get(), self.tos.get()),
-                                                  self.refresh_data_items()])
+                                                  self.refresh_modules()])
         parse_button.pack(pady=5)
 
         self.module_chooser.pack(fill=tk.X)
