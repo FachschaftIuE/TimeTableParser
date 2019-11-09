@@ -6,8 +6,8 @@ from helper.folder_manager import path_leaf
 
 # constants
 title = "TimeTableParser"
-height = 800
-width = 600
+height = 815
+width = 500
 
 
 class Gui:
@@ -17,9 +17,8 @@ class Gui:
     input_files = tk.Frame(input_section)
     input_file_list = tk.Listbox(input_files, width=40)
     parse_section = tk.Frame(root)
-    data_item_chooser = tk.Frame(parse_section)
-    selectable_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
-    selected_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
+    module_chooser = tk.Frame(parse_section)
+    module_list = tk.Listbox(module_chooser, width=40, selectmode=tk.MULTIPLE)
 
     def __init__(self):
         self.root.title(title)
@@ -48,12 +47,11 @@ class Gui:
 
     def refresh_data_items(self):
         # clear data_item_chooser
-        self.selectable_data_items_listbox.delete(0, tk.END)
-        self.selected_data_items_listbox.delete(0, tk.END)
+        self.module_list.delete(0, tk.END)
 
         # add files
-        for data_item in self.controller.data_items:
-            self.selectable_data_items_listbox.insert(tk.END, data_item.module)
+        for data_item in self.controller.selectable_data_items:
+            self.module_list.insert(tk.END, data_item.module)
 
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()
@@ -128,33 +126,21 @@ class Gui:
 
         # parse button
         parse_button = tk.Button(self.parse_section, text="Parse",
-                                 command=lambda: [self.controller.parse_inputs(self.use_cache.get(),
-                                                                               self.export_as_ics.get(),
-                                                                               self.tos.get()),
+                                 command=lambda: [self.controller.parse_inputs(self.use_cache.get(), self.tos.get()),
                                                   self.refresh_data_items()])
         parse_button.pack(pady=5)
 
-        # data_item chooser
+        self.module_chooser.pack(fill=tk.X)
+        module_chooser_label = tk.Label(self.module_chooser, text="Parsed Modules.")
+        module_chooser_label.pack(side=tk.TOP)
+        module_chooser_scrollbar = tk.Scrollbar(self.module_chooser)
+        self.module_list.pack(side=tk.LEFT)
+        module_chooser_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.module_list.config(yscrollcommand=module_chooser_scrollbar.set)
+        module_chooser_scrollbar.config(command=self.module_list.yview)
 
-        self.data_item_chooser.pack()
-
-        data_items_lable = tk.Label(self.data_item_chooser,
-                                    text="Parsed Modules\t\t\t\tModules to save in calendar.")
-        data_items_lable.pack(side=tk.TOP)
-
-        selectable_data_items_listbox_scrollbar = tk.Scrollbar(self.data_item_chooser)
-        self.selectable_data_items_listbox.pack(side=tk.LEFT, fill=tk.Y)
-        selectable_data_items_listbox_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
-        self.selectable_data_items_listbox.config(yscrollcommand=selectable_data_items_listbox_scrollbar.set)
-        self.selectable_data_items_listbox.bind('<<ListboxSelect>>', self.controller.select_data_item)
-        selectable_data_items_listbox_scrollbar.config(command=self.selectable_data_items_listbox.yview)
-
-        selected_data_items_listbox_scrollbar = tk.Scrollbar(self.data_item_chooser)
-        self.selected_data_items_listbox.pack(side=tk.RIGHT, fill=tk.Y)
-        selected_data_items_listbox_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        self.selected_data_items_listbox.config(yscrollcommand=selected_data_items_listbox_scrollbar.set)
-        self.selected_data_items_listbox.bind('<<ListboxSelect>>', self.controller.deselect_data_item)
-        selected_data_items_listbox_scrollbar.config(command=self.selected_data_items_listbox.yview)
+        data_items_manual = tk.Label(self.parse_section, text="Click item in list to (de-)select it.")
+        data_items_manual.pack()
 
         # Create calendar button
         create_calendar_button = tk.Button(self.parse_section, text="Create Calendar",
