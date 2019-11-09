@@ -4,6 +4,7 @@ from classes.controller.timetable_controller import TimetableController
 from classes.file_management.loader import Loader
 from classes.models.timetable import Timetable
 from classes.view import gui
+from helper.data_handler import create_data_dictionary
 from helper.data_item_from_json import data_item_from_json
 from helper.data_output import create_json_from_data_item
 from helper.folder_manager import file_handler, read_cache_folder, convert_files
@@ -63,10 +64,12 @@ class GuiController:
 
         for file_index in range(files["files_to_load"].__len__()):
             data_item = data_item_from_json(data, files["files_to_load"][file_index]["file_path"])
+
+        for data_item in create_data_dictionary(data):
             self.data_items.append(data_item)
 
         # TODO convert to gui
-        # filter_data_list(data, user_select(create_data_dictionary(data)))
+        # filter_data_list(data, user_select(c))
         # format_select(data)
 
         messagebox.showinfo(gui.title, "Parsing finished! 😊")

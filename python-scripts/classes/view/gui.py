@@ -16,6 +16,10 @@ class Gui:
     input_section = tk.Frame(root)
     input_files = tk.Frame(input_section)
     input_file_list = tk.Listbox(input_files, width=40)
+    parse_section = tk.Frame(root)
+    data_item_chooser = tk.Frame(parse_section)
+    selectable_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
+    selected_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
 
     def __init__(self):
         self.root.title(title)
@@ -43,7 +47,13 @@ class Gui:
             self.input_file_list.insert(tk.END, path_leaf(input_file))
 
     def refresh_data_items(self):
-        pass #TODO implement
+        # clear data_item_chooser
+        self.selectable_data_items_listbox.delete(0, tk.END)
+        self.selected_data_items_listbox.delete(0, tk.END)
+
+        # add files
+        for data_item in self.controller.data_items:
+            self.selectable_data_items_listbox.insert(tk.END, data_item.module)
 
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()
@@ -110,15 +120,14 @@ class Gui:
         # endregion
 
         # region parse section
-        parse_section = tk.Frame(self.root)
-        parse_section.pack(pady=10)
+        self.parse_section.pack(pady=10)
 
         # parse label
-        parse_label = tk.Label(parse_section, text="Parse Timetable(s)", font='Helvetica 10 bold')
+        parse_label = tk.Label(self.parse_section, text="Parse Timetable(s)", font='Helvetica 10 bold')
         parse_label.pack()
 
         # parse button
-        parse_button = tk.Button(parse_section, text="Parse",
+        parse_button = tk.Button(self.parse_section, text="Parse",
                                  command=lambda: [self.controller.parse_inputs(self.use_cache.get(),
                                                                                self.export_as_ics.get(),
                                                                                self.tos.get()),
@@ -126,30 +135,29 @@ class Gui:
         parse_button.pack(pady=5)
 
         # data_item chooser
-        data_item_chooser = tk.Frame(parse_section)
-        data_item_chooser.pack()
 
-        data_items_lable = tk.Label(data_item_chooser,
-                                               text="Parsed Modules\t\t\t\tModules to save in calendar.")
+        self.data_item_chooser.pack()
+
+        data_items_lable = tk.Label(self.data_item_chooser,
+                                    text="Parsed Modules\t\t\t\tModules to save in calendar.")
         data_items_lable.pack(side=tk.TOP)
-        selectable_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
-        selectable_data_items_listbox_scrollbar = tk.Scrollbar(data_item_chooser)
-        selectable_data_items_listbox.pack(side=tk.LEFT, fill=tk.Y)
-        selectable_data_items_listbox_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
-        selectable_data_items_listbox.config(yscrollcommand=selectable_data_items_listbox_scrollbar.set)
-        selectable_data_items_listbox.bind('<<ListboxSelect>>', self.controller.select_data_item)
-        selectable_data_items_listbox_scrollbar.config(command=selectable_data_items_listbox.yview)
 
-        selected_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
-        selected_data_items_listbox_scrollbar = tk.Scrollbar(data_item_chooser)
-        selected_data_items_listbox.pack(side=tk.RIGHT, fill=tk.Y)
+        selectable_data_items_listbox_scrollbar = tk.Scrollbar(self.data_item_chooser)
+        self.selectable_data_items_listbox.pack(side=tk.LEFT, fill=tk.Y)
+        selectable_data_items_listbox_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
+        self.selectable_data_items_listbox.config(yscrollcommand=selectable_data_items_listbox_scrollbar.set)
+        self.selectable_data_items_listbox.bind('<<ListboxSelect>>', self.controller.select_data_item)
+        selectable_data_items_listbox_scrollbar.config(command=self.selectable_data_items_listbox.yview)
+
+        selected_data_items_listbox_scrollbar = tk.Scrollbar(self.data_item_chooser)
+        self.selected_data_items_listbox.pack(side=tk.RIGHT, fill=tk.Y)
         selected_data_items_listbox_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        selected_data_items_listbox.config(yscrollcommand=selected_data_items_listbox_scrollbar.set)
-        selected_data_items_listbox.bind('<<ListboxSelect>>', self.controller.deselect_data_item)
-        selected_data_items_listbox_scrollbar.config(command=selected_data_items_listbox.yview)
+        self.selected_data_items_listbox.config(yscrollcommand=selected_data_items_listbox_scrollbar.set)
+        self.selected_data_items_listbox.bind('<<ListboxSelect>>', self.controller.deselect_data_item)
+        selected_data_items_listbox_scrollbar.config(command=self.selected_data_items_listbox.yview)
 
         # Create calendar button
-        create_calendar_button = tk.Button(parse_section, text="Create Calendar",
+        create_calendar_button = tk.Button(self.parse_section, text="Create Calendar",
                                            command=self.controller.create_calendar)
         create_calendar_button.pack(pady=10)
 
@@ -169,10 +177,10 @@ class Gui:
 
         tos_label = tk.Label(tos_section, font='Helvetica 8',
                              text="The contents of the TimeTableParser (TTP) were compiled with the "
-                                               "greatest possible care and\nin accordance with in the best of "
-                                               "conscience. Nevertheless, the provider of this application does not"
-                                               "\nassume any liability for the topicality, completeness and"
-                                               " correctness of the content provided.")
+                                  "greatest possible care and\nin accordance with in the best of "
+                                  "conscience. Nevertheless, the provider of this application does not"
+                                  "\nassume any liability for the topicality, completeness and"
+                                  " correctness of the content provided.")
         tos_label.pack()
 
         # endregion
