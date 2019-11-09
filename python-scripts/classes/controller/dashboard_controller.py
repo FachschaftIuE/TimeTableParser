@@ -54,4 +54,8 @@ class GuiController:
         for file_index in range(files["files_to_load"].__len__()):
             data_item_from_json(data, files["files_to_load"][file_index]["file_path"])
 
+        # TODO convert to gui
+        # filter_data_list(data, user_select(create_data_dictionary(data)))
+        # format_select(data)
+
         messagebox.showinfo(gui.title, "Parsing finished! 😊")
