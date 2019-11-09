@@ -144,7 +144,11 @@ class Gui:
 
         # Create calendar button
         create_calendar_button = tk.Button(self.parse_section, text="Create Calendar",
-                                           command=self.controller.create_calendar)
+                                           command=lambda: self.controller.create_calendar(
+                                               self.tos.get(),
+                                               self.export_as_ics.get(),
+                                               self.module_list.curselection())
+                                           )
         create_calendar_button.pack(pady=10)
 
         # endregion

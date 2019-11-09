@@ -16,16 +16,27 @@ class GuiController:
     def __init__(self):
         self.files = []
         self.selectable_data_items = []
-        self.selected_data_items = []
 
     def clear_inputs(self):
         self.files.clear()
 
-    def create_calendar(self):
-        pass  # TODO implement
+    def create_calendar(self, agreed_to_tos, export_as_ics, selected_modules):
+        if not agreed_to_tos:
+            messagebox.showerror(gui.title, "You need to agree to the Terms Of Service to do that.")
+            return
 
-    def parse_inputs(self, use_cache, tos):
-        if not tos:
+        if len(selected_modules) == 0:
+            messagebox.showinfo(gui.title, "There are no modules selected. "
+                                           "Please select modules to fill the calendar with.")
+            return
+
+        # TODO let user decide output path
+        # TODO create file according to filetype
+        # filter_data_list(data, user_select(c))
+        # format_select(data)
+
+    def parse_inputs(self, use_cache, agreed_to_tos):
+        if not agreed_to_tos:
             messagebox.showerror(gui.title, "You need to agree to the Terms Of Service to do that.")
             return
 
@@ -62,10 +73,6 @@ class GuiController:
 
         for data_item in create_data_dictionary(data):
             self.selectable_data_items.append(data_item)
-
-        # TODO convert to gui
-        # filter_data_list(data, user_select(c))
-        # format_select(data)
 
         messagebox.showinfo(gui.title, "Parsing finished! 😊")
 
