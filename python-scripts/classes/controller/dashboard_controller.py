@@ -65,32 +65,36 @@ class GuiController:
 
         messagebox.showinfo(gui.title, "This process may take a while. Grab a something to drink! 😊")
 
-        files = file_handler(convert_files(self.files, '.pdf'), read_cache_folder(), use_cache)
+        try:
+            files = file_handler(convert_files(self.files, '.pdf'), read_cache_folder(), use_cache)
 
-        for file_index in range(files["files_to_parse"].__len__()):
-            page_count = get_pdf_pages(files["files_to_parse"][file_index]["file_path"])
+            for file_index in range(files["files_to_parse"].__len__()):
+                page_count = get_pdf_pages(files["files_to_parse"][file_index]["file_path"])
 
-            for page in range(page_count):
-                file_container = Loader(files["files_to_parse"][file_index]["file_path"],
-                                        files["files_to_parse"][file_index]["file_name"],
-                                        page)
+                for page in range(page_count):
+                    file_container = Loader(files["files_to_parse"][file_index]["file_path"],
+                                            files["files_to_parse"][file_index]["file_name"],
+                                            page)
 
-                timetable = Timetable()
-                t_controller = TimetableController(file_container, timetable)
-                t_controller.create_timetable_information()
-                t_controller.send_data_to_timetable()
-                timetable.search_modules()
-                timetable.get_weeks()
-                timetable.find_modules(self._parsed_data_items)
+                    timetable = Timetable()
+                    t_controller = TimetableController(file_container, timetable)
+                    t_controller.create_timetable_information()
+                    t_controller.send_data_to_timetable()
+                    timetable.search_modules()
+                    timetable.get_weeks()
+                    timetable.find_modules(self._parsed_data_items)
 
-            create_json_from_data_item(self._parsed_data_items, files["files_to_parse"][file_index]["file_name"])
+                create_json_from_data_item(self._parsed_data_items, files["files_to_parse"][file_index]["file_name"])
 
-        for file_index in range(files["files_to_load"].__len__()):
-            data_item_from_json(self._parsed_data_items, files["files_to_load"][file_index]["file_path"])
+            for file_index in range(files["files_to_load"].__len__()):
+                data_item_from_json(self._parsed_data_items, files["files_to_load"][file_index]["file_path"])
 
-        for data_item in create_data_dictionary(self._parsed_data_items):
-            self.selectable_modules.append(data_item)
+            for data_item in create_data_dictionary(self._parsed_data_items):
+                self.selectable_modules.append(data_item)
 
-        messagebox.showinfo(gui.title, "Parsing finished! 😊")
+            messagebox.showinfo(gui.title, "Parsing finished! 😊")
+
+        except Exception as e:
+            messagebox.showerror(gui.title, "Could not parse the timetable because:\n" + str(e))
 
 
