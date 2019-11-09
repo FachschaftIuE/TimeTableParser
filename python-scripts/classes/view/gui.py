@@ -50,7 +50,7 @@ class Gui:
         self.module_list.delete(0, tk.END)
 
         # add files
-        for data_item in self.controller.selectable_data_items:
+        for data_item in self.controller.selectable_modules:
             self.module_list.insert(tk.END, data_item.module)
 
     def center_window_on_screen(self):

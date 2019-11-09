@@ -12,8 +12,8 @@ from classes.data_item import DataItem
 output_folder = pathlib.Path.cwd().joinpath('data', 'output')
 cache_folder = pathlib.Path.cwd().joinpath('data', 'cache')
 
-def create_csv(data: List[DataItem], filename: str = "calendar"):
 
+def create_csv(data: List[DataItem], filename: str = "calendar"):
     """
     Summary
     -------
@@ -49,7 +49,6 @@ def create_csv(data: List[DataItem], filename: str = "calendar"):
 
 
 def create_ics(data: List[DataItem], filename: str = "calendar"):
-
     """
     Summary
     -------
@@ -136,15 +135,6 @@ def create_json_from_data_item(data_item_list: List[DataItem], filename):
 
         for x in range(len(temp_list)):
             json_file.writelines(temp_list[x].to_json())
-            if x < (len(temp_list)-1):
+            if x < (len(temp_list) - 1):
                 json_file.writelines(',')
         json_file.writelines(']')
-
-
-
-
-
-
-
-
-

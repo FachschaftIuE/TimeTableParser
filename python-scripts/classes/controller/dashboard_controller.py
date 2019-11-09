@@ -6,7 +6,7 @@ from classes.models.timetable import Timetable
 from classes.view import gui
 from helper.data_handler import create_data_dictionary
 from helper.data_item_from_json import data_item_from_json
-from helper.data_output import create_json_from_data_item
+from helper.data_output import create_json_from_data_item, create_ics, create_csv
 from helper.folder_manager import file_handler, read_cache_folder, convert_files
 from helper.get_pdf_pages import get_pdf_pages
 
@@ -15,25 +15,37 @@ class GuiController:
 
     def __init__(self):
         self.files = []
-        self.selectable_data_items = []
+        self.selectable_modules = []
+        self._parsed_data_items = []
 
     def clear_inputs(self):
         self.files.clear()
 
-    def create_calendar(self, agreed_to_tos, export_as_ics, selected_modules):
+    def create_calendar(self, agreed_to_tos, export_as_ics, selected_module_indices):
         if not agreed_to_tos:
             messagebox.showerror(gui.title, "You need to agree to the Terms Of Service to do that.")
             return
 
-        if len(selected_modules) == 0:
+        if len(selected_module_indices) == 0:
             messagebox.showinfo(gui.title, "There are no modules selected. "
                                            "Please select modules to fill the calendar with.")
             return
 
-        # TODO let user decide output path
-        # TODO create file according to filetype
-        # filter_data_list(data, user_select(c))
-        # format_select(data)
+        selected_module_names = []
+        for index in selected_module_indices:
+            selected_module_names.append(self.selectable_modules[index].module)
+
+        selected_modules = []
+        for module in self._parsed_data_items:
+            if selected_module_names.__contains__(module.module):
+                selected_modules.append(module)
+
+        if export_as_ics:
+            create_ics(selected_modules)
+        else:
+            create_csv(selected_modules)
+
+        messagebox.showinfo(gui.title, "Created the calendar. Check the /data/output folder! 😊")
 
     def parse_inputs(self, use_cache, agreed_to_tos):
         if not agreed_to_tos:
@@ -45,9 +57,14 @@ class GuiController:
                                            "To parse a timetable add it via the 'Add Timetable'-Button.")
             return
 
+        # TODO fix parsing multiple files
+
+        # reset from previous parse
+        self.selectable_modules = []
+        self._parsed_data_items = []
+
         messagebox.showinfo(gui.title, "This process may take a while. Grab a something to drink! 😊")
 
-        data = list()
         files = file_handler(convert_files(self.files, '.pdf'), read_cache_folder(), use_cache)
 
         for file_index in range(files["files_to_parse"].__len__()):
@@ -64,15 +81,15 @@ class GuiController:
                 t_controller.send_data_to_timetable()
                 timetable.search_modules()
                 timetable.get_weeks()
-                timetable.find_modules(data)
+                timetable.find_modules(self._parsed_data_items)
 
-            create_json_from_data_item(data, files["files_to_parse"][file_index]["file_name"])
+            create_json_from_data_item(self._parsed_data_items, files["files_to_parse"][file_index]["file_name"])
 
         for file_index in range(files["files_to_load"].__len__()):
-            data_item = data_item_from_json(data, files["files_to_load"][file_index]["file_path"])
+            data_item_from_json(self._parsed_data_items, files["files_to_load"][file_index]["file_path"])
 
-        for data_item in create_data_dictionary(data):
-            self.selectable_data_items.append(data_item)
+        for data_item in create_data_dictionary(self._parsed_data_items):
+            self.selectable_modules.append(data_item)
 
         messagebox.showinfo(gui.title, "Parsing finished! 😊")
 

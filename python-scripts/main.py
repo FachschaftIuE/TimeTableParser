@@ -8,7 +8,7 @@ def main():
 
     # endregion
 
-    # # region old main
+    # # region old main TODO remove
     #
     # colorama.init()
     # show_application_disclaimer()
