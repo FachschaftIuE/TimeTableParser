@@ -6,8 +6,8 @@ from helper.folder_manager import path_leaf
 
 # constants
 title = "TimeTableParser"
-height = 650
-width = 300
+height = 800
+width = 600
 
 
 class Gui:
@@ -41,6 +41,9 @@ class Gui:
         # add files
         for input_file in self.controller.files:
             self.input_file_list.insert(tk.END, path_leaf(input_file))
+
+    def refresh_data_items(self):
+        pass #TODO implement
 
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()
@@ -118,28 +121,58 @@ class Gui:
         parse_button = tk.Button(parse_section, text="Parse",
                                  command=lambda: [self.controller.parse_inputs(self.use_cache.get(),
                                                                                self.export_as_ics.get(),
-                                                                               self.tos.get())])
+                                                                               self.tos.get()),
+                                                  self.refresh_data_items()])
         parse_button.pack(pady=5)
 
-        # TOS checkbox
-        tos_checkbox = tk.Checkbutton(parse_section, text="Agree to Terms Of Service", variable=self.tos)
-        tos_checkbox.pack()
+        # data_item chooser
+        data_item_chooser = tk.Frame(parse_section)
+        data_item_chooser.pack()
+
+        data_items_lable = tk.Label(data_item_chooser,
+                                               text="Parsed Modules\t\t\t\tModules to save in calendar.")
+        data_items_lable.pack(side=tk.TOP)
+        selectable_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
+        selectable_data_items_listbox_scrollbar = tk.Scrollbar(data_item_chooser)
+        selectable_data_items_listbox.pack(side=tk.LEFT, fill=tk.Y)
+        selectable_data_items_listbox_scrollbar.pack(side=tk.LEFT, fill=tk.Y)
+        selectable_data_items_listbox.config(yscrollcommand=selectable_data_items_listbox_scrollbar.set)
+        selectable_data_items_listbox.bind('<<ListboxSelect>>', self.controller.select_data_item)
+        selectable_data_items_listbox_scrollbar.config(command=selectable_data_items_listbox.yview)
+
+        selected_data_items_listbox = tk.Listbox(data_item_chooser, width=40)
+        selected_data_items_listbox_scrollbar = tk.Scrollbar(data_item_chooser)
+        selected_data_items_listbox.pack(side=tk.RIGHT, fill=tk.Y)
+        selected_data_items_listbox_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        selected_data_items_listbox.config(yscrollcommand=selected_data_items_listbox_scrollbar.set)
+        selected_data_items_listbox.bind('<<ListboxSelect>>', self.controller.deselect_data_item)
+        selected_data_items_listbox_scrollbar.config(command=selected_data_items_listbox.yview)
+
+        # Create calendar button
+        create_calendar_button = tk.Button(parse_section, text="Create Calendar",
+                                           command=self.controller.create_calendar)
+        create_calendar_button.pack(pady=10)
 
         # endregion
 
         # region TOS section
 
         tos_section = tk.Frame(self.root)
-        tos_section.pack(pady=10)
+        tos_section.pack()
 
-        tos_label = tk.Label(tos_section, text="Terms of Service / TOS", font='Helvetica 10 bold')
+        # TOS checkbox
+        tos_checkbox = tk.Checkbutton(tos_section, text="Agree to Terms Of Service", variable=self.tos)
+        tos_checkbox.pack()
+
+        tos_label = tk.Label(tos_section, text="Terms of Service / TOS", font='Helvetica 8 bold')
         tos_label.pack()
 
-        tos_label = tk.Label(tos_section, text="The contents of the TimeTableParser (TTP)\n were compiled with the "
-                                               "greatest possible care\n and in accordance with in the best of "
-                                               "conscience. \nNevertheless, the provider of this application\n does not"
-                                               " assume any liability\nfor the topicality, completeness and"
-                                               " correctness\n of the csv/ics files and other content provided.")
+        tos_label = tk.Label(tos_section, font='Helvetica 8',
+                             text="The contents of the TimeTableParser (TTP) were compiled with the "
+                                               "greatest possible care and\nin accordance with in the best of "
+                                               "conscience. Nevertheless, the provider of this application does not"
+                                               "\nassume any liability for the topicality, completeness and"
+                                               " correctness of the content provided.")
         tos_label.pack()
 
         # endregion

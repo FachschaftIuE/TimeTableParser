@@ -14,9 +14,19 @@ class GuiController:
 
     def __init__(self):
         self.files = []
+        self.data_items = []
 
     def clear_inputs(self):
         self.files.clear()
+
+    def create_calendar(self):
+        pass  # TODO implement
+
+    def select_data_item(self, event):
+        pass  # TODO implement
+
+    def deselect_data_item(self, event):
+        pass  # TODO implement
 
     def parse_inputs(self, use_cache, export_as_ics, tos):
         if not tos:
@@ -52,10 +62,13 @@ class GuiController:
             create_json_from_data_item(data, files["files_to_parse"][file_index]["file_name"])
 
         for file_index in range(files["files_to_load"].__len__()):
-            data_item_from_json(data, files["files_to_load"][file_index]["file_path"])
+            data_item = data_item_from_json(data, files["files_to_load"][file_index]["file_path"])
+            self.data_items.append(data_item)
 
         # TODO convert to gui
         # filter_data_list(data, user_select(create_data_dictionary(data)))
         # format_select(data)
 
         messagebox.showinfo(gui.title, "Parsing finished! 😊")
+
+
