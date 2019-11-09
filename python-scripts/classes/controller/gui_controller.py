@@ -64,6 +64,7 @@ class GuiController:
             return
 
         # TODO fix parsing multiple files
+        # TODO fix filepath issues when not from 'correct' folder
 
         # reset from previous parse
         self.selectable_modules = []
