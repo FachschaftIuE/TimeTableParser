@@ -33,8 +33,8 @@ class Gui:
 
     def add_file(self):
         filename = filedialog.askopenfilename(title="Select a Timetable", filetypes=[("Timetables", "*.pdf")])
-        if filename != "" and not self.controller.files.__contains__(filename):
-            self.controller.files.append(filename)
+        if filename != "" and not self.controller.input_files.__contains__(filename):
+            self.controller.input_files.append(filename)
             self.refresh_inputs()
 
     def refresh_inputs(self):
@@ -42,7 +42,7 @@ class Gui:
         self.input_file_list.delete(0, tk.END)
 
         # add files
-        for input_file in self.controller.files:
+        for input_file in self.controller.input_files:
             self.input_file_list.insert(tk.END, path_leaf(input_file))
 
     def refresh_modules(self):
@@ -128,7 +128,7 @@ class Gui:
 
         # parse button
         parse_button = tk.Button(self.parse_section, text="Parse Timetable(s)",
-                                 command=lambda: [self.controller.parse_inputs(self.use_cache.get(), self.tos.get()),
+                                 command=lambda: [self.controller.parse_input_files(self.use_cache.get(), self.tos.get()),
                                                   self.refresh_modules()])
         parse_button.pack(pady=5)
 

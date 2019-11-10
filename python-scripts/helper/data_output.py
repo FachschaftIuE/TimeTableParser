@@ -130,7 +130,7 @@ def create_json_from_data_item(data_item_list: List[DataItem], filename):
 
         # Create file from list
         for x in range(len(data_item_list)):
-            if data_item_list[x].pdf_name == filename.replace('.json', ''):
+            if data_item_list[x].pdf_name == filename.replace('.json', '.pdf'):
                 temp_list.append(data_item_list[x])
 
         for x in range(len(temp_list)):

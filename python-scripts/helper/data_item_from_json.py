@@ -24,7 +24,7 @@ def decode_data_item(dct) -> DataItem:
     return dct
 
 
-def data_item_from_json(data_item_list, filepath: str):
+def data_items_from_json(data_item_list, filepath: str):
     """
     Summary
     -------
