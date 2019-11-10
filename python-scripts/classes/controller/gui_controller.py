@@ -51,7 +51,7 @@ class GuiController:
         else:
             create_csv(selected_modules)
 
-        messagebox.showinfo(gui.title, "Created the calendar. Check the /data/output folder! 😊")
+        messagebox.showinfo(gui.title, "Created the calendar. Check the /data/output folder! :)")
 
     def parse_input_files(self, use_cache, agreed_to_tos):
         if not agreed_to_tos:
@@ -67,7 +67,7 @@ class GuiController:
         self.selectable_modules = []
         self._parsed_data_items = []
 
-        messagebox.showinfo(gui.title, "This process may take a while. Grab a something to drink! 😊")
+        messagebox.showinfo(gui.title, "This process may take a while. Grab a something to drink! :)")
 
         for file in self.input_files:
             try:
@@ -92,7 +92,7 @@ class GuiController:
                 messagebox.showerror(gui.title,
                                      "Couldn't parse the timetable '" + path_leaf(file) + "' because:\n" + str(e))
 
-        messagebox.showinfo(gui.title, "Parsing finished! 😊")
+        messagebox.showinfo(gui.title, "Parsing finished! :)")
 
 
 def get_data_items_from_file(file):
