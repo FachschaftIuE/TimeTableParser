@@ -51,7 +51,7 @@ class Gui:
 
         # add files
         for data_item in self.controller.selectable_modules:
-            self.module_list.insert(tk.END, data_item.module)
+            self.module_list.insert(tk.END, data_item)
 
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()

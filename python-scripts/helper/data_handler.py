@@ -5,22 +5,6 @@ from classes.data_item import DataItem
 from classes.dictionary_item import DictionaryItem
 
 
-def get_data_items_from_file(file):
-
-    """
-    Summary
-    -------
-    Retrieves the data items from the given file.
-
-    Parameter
-    ---------
-    file : path                 # Absolute path of the file that's going to be parsed.
-                                  Supports *.json and *.pdf files.
-    """
-
-    return []   # TODO implement
-
-
 def create_event(data: List[DataItem], pdf_name: str, module: str, start_datetime: datetime, end_datetime: datetime,
                  lecturer: str, location: str):
 
