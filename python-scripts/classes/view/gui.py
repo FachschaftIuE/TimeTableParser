@@ -1,3 +1,4 @@
+import pathlib
 import tkinter as tk
 from tkinter import filedialog
 
@@ -22,6 +23,7 @@ class Gui:
 
     def __init__(self):
         self.root.title(title)
+        self.root.iconbitmap(pathlib.Path.cwd().joinpath('res', 'icon.ico'))
         self.center_window_on_screen()
         self.use_cache = tk.BooleanVar()
         self.export_as_ics = tk.BooleanVar()
