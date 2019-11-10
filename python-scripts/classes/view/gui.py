@@ -86,13 +86,13 @@ class Gui:
         # input buttons
         input_section_buttons = tk.Frame(self.input_section)
         input_section_buttons.pack(side=tk.BOTTOM)
+        add_button = tk.Button(input_section_buttons, text="Add Timetable", command=self.add_file)
+        add_button.pack(side=tk.LEFT, padx=10)
         clear_button = tk.Button(input_section_buttons, text="Clear",
                                  command=lambda: [self.controller.clear_inputs(),
                                                   self.refresh_inputs(),
                                                   self.refresh_modules()])
-        clear_button.pack(side=tk.LEFT, padx=10)
-        add_button = tk.Button(input_section_buttons, text="Add Timetable", command=self.add_file)
-        add_button.pack(side=tk.RIGHT, padx=10)
+        clear_button.pack(side=tk.RIGHT, padx=10)
 
         # endregion
 
