@@ -88,7 +88,7 @@ class GuiController:
                     create_json_from_data_item(data_items_in_file, path_leaf(cached_file).replace('.json', ''))
                 print(path_leaf(file) + " was successfully parsed.")
 
-            except Exception as e:  # TODO catch in production
+            except Exception as e:
                 messagebox.showerror(gui.title,
                                      "Couldn't parse the timetable '" + path_leaf(file) + "' because:\n" + str(e))
 
