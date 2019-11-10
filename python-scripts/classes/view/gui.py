@@ -32,10 +32,11 @@ class Gui:
         self.root.mainloop()
 
     def add_file(self):
-        filename = filedialog.askopenfilename(title="Select a Timetable", filetypes=[("Timetables", "*.pdf")])
-        if filename != "" and not self.controller.input_files.__contains__(filename):
-            self.controller.input_files.append(filename)
-            self.refresh_inputs()
+        selected_files = filedialog.askopenfilenames(title="Select Timetables", filetypes=[("Timetables", "*.pdf")])
+        for file in selected_files:
+            if file != "" and not self.controller.input_files.__contains__(file):
+                self.controller.input_files.append(file)
+                self.refresh_inputs()
 
     def refresh_inputs(self):
         # clear listbox
@@ -86,7 +87,7 @@ class Gui:
         # input buttons
         input_section_buttons = tk.Frame(self.input_section)
         input_section_buttons.pack(side=tk.BOTTOM)
-        add_button = tk.Button(input_section_buttons, text="Add Timetable", command=self.add_file)
+        add_button = tk.Button(input_section_buttons, text="Add Timetables", command=self.add_file)
         add_button.pack(side=tk.LEFT, padx=10)
         clear_button = tk.Button(input_section_buttons, text="Clear",
                                  command=lambda: [self.controller.clear_inputs(),
