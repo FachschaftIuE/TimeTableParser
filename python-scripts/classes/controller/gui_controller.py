@@ -38,12 +38,12 @@ class GuiController:
 
         selected_module_names = []
         for index in selected_module_indices:
-            selected_module_names.append(self.selectable_modules[index].module)
+            selected_module_names.append(self.selectable_modules[index])
 
         selected_modules = []
-        for module in self._parsed_data_items:
-            if selected_module_names.__contains__(module.module):
-                selected_modules.append(module)
+        for data_item in self._parsed_data_items:
+            if selected_module_names.__contains__(data_item.module):
+                selected_modules.append(data_item)
 
         if export_as_ics:
             create_ics(selected_modules)
@@ -110,10 +110,10 @@ def get_data_items_from_file(file):
     data_items = []
 
     if str(file).endswith('.pdf'):
-        page_count = count_pdf_pages(file)
+        timetable = Timetable()
 
+        page_count = count_pdf_pages(file)
         for page_index in range(page_count):
-            timetable = Timetable()
             timetable_controller = TimetableController(Loader(file, path_leaf(file), page_index), timetable)
             timetable_controller.create_timetable_information()
             timetable_controller.send_data_to_timetable()
