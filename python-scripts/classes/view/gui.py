@@ -53,6 +53,12 @@ class Gui:
         for data_item in self.controller.selectable_modules:
             self.module_list.insert(tk.END, data_item)
 
+    def select_all_modules(self):
+        self.module_list.select_set(0, tk.END)
+
+    def deselect_all_modules(self):
+        self.module_list.selection_clear(0, tk.END)
+
     def center_window_on_screen(self):
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
@@ -141,8 +147,15 @@ class Gui:
         self.module_list.config(yscrollcommand=module_chooser_scrollbar.set)
         module_chooser_scrollbar.config(command=self.module_list.yview)
 
-        data_items_manual = tk.Label(self.parse_section, text="Click item in list to (de-)select it.")
-        data_items_manual.pack()
+        modules_manual = tk.Label(self.parse_section, text="Click item in list to (de-)select it.")
+        modules_manual.pack()
+
+        select_all_modules_button = tk.Button(self.parse_section, text="Select All", command=self.select_all_modules)
+        select_all_modules_button.pack(side=tk.LEFT)
+
+        deselect_all_modules_button = \
+            tk.Button(self.parse_section, text="Deselect All", command=self.deselect_all_modules)
+        deselect_all_modules_button.pack(side=tk.RIGHT)
 
         # Create calendar button
         create_calendar_button = tk.Button(self.parse_section, text="Create Calendar",
