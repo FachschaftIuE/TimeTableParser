@@ -23,16 +23,25 @@ pip install -r requirements.txt
 ```
 
 ## Verwendung
-
-* Lege die auszulesende Stundenplan-PDF in den Input-Ordner ab (`data/input`)
-* ``` 
-  python python-scripts/main.py
-	```
-* Es folgt eine Konsolenabfrage zu den gewünschten Modulen.
-* Formatierter Stundenplan ist in dem Output-Ordner in Form von einer `.csv`- oder `.ics`-Datei, zu finden (`data/output`)
-* Importiere das gewünschte Format in den Kalender
-* `.ics` = für Apple Anwendungen 
-* `.csv` = für Meisten anderen Kalenderanwendungen
+* Windows
+    1.  Führe TTP.exe in  release/vX-X-X/ aus.
+    2.  Füge Stundenpläne hinzu, die konvertiert werden sollen.
+    3.  Setze die Einstellungen, die du willst.
+    4.  Lese und erkläre dich mit den AGB/TOS einverstanden. Hinweis: Hierfür musst du Englisch verstehen können.
+    5.  Drücke auf 'Parse Timetable(s)'.
+    6.  Wähle die Module aus, die in den Kalendar integriert werden sollen.
+    7.  Drücke auf 'Create Calendar'.
+    8.  Der Calendar befindet sich im Verzeichnis ./data/output.
+    
+* Andere Betriebssysteme
+    1.  Führe ```python python-scripts/main.py``` in dem Wurzelverzeichnis aus.
+    2.  Füge Stundenpläne hinzu, die konvertiert werden sollen.
+    3.  Setze die Einstellungen, die du willst.
+    4.  Lese und erkläre dich mit den AGB/TOS einverstanden. Hinweis: Hierfür musst du Englisch verstehen können.
+    5.  Drücke auf 'Parse Timetable(s)'.
+    6.  Wähle die Module aus, die in den Kalendar integriert werden sollen.
+    7.  Drücke auf 'Create Calendar'.
+    8.  Der Calendar befindet sich im Verzeichnis ./data/output.
 
 ## Ordnerstruktur
 ```
@@ -69,15 +78,25 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-*	Save timetable-PDF in input-folder (`data/input`)
-* ```bash
-  python python-scripts/main.py
-  ```
-* A console query will ask you to choose your modules
-* Formatted timetable will be created in form of a `.csv`- or `.ics`-file, depending on your choice, in the output-folder (`data/output`)
-* Import your prefered file to your calendar
-* `.ics` = for Apple Applications
-* `.csv` = for most other Applications
+* Windows
+    1.  Run TTP.exe in  release/vX-X-X/.
+    2.  Add Timetables that are going to be parsed.
+    3.  Adjust settings to your liking.
+    4.  Read and agree to Terms of Service.
+    5.  Press 'Parse Timetable(s)'.
+    6.  Choose desired modules for the calendar.
+    7.  Press 'Create Calendar'.
+    8.  The calendar will be in ./data/output.
+    
+* Other OS
+    1.  Run ```python python-scripts/main.py``` in root-directory.
+    2.  Add Timetables that are going to be parsed.
+    3.  Adjust settings to your liking.
+    4.  Read and agree to Terms of Service.
+    5.  Press 'Parse Timetable(s)'.
+    6.  Choose desired modules for the calendar.
+    7.  Press 'Create Calendar'.
+    8.  The calendar will be in ./data/output.
 
 ## Folder Structure
 ```
