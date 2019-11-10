@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## Verwendung
 * Windows
-    1.  Führe TTP.exe in  release/vX-X-X/ aus.
+    1.  Führe TTP.exe in  release/vX-X-X/ aus. Hinweis: Du musst evtl. die Datei vorher entpacken.
     2.  Füge Stundenpläne hinzu, die konvertiert werden sollen.
     3.  Setze die Einstellungen, die du willst.
     4.  Lese und erkläre dich mit den AGB/TOS einverstanden. Hinweis: Hierfür musst du Englisch verstehen können.
@@ -79,7 +79,7 @@ pip install -r requirements.txt
 
 ## Usage
 * Windows
-    1.  Run TTP.exe in  release/vX-X-X/.
+    1.  Run TTP.exe in  release/vX-X-X/. Hint: You might need to unzip it first. 
     2.  Add Timetables that are going to be parsed.
     3.  Adjust settings to your liking.
     4.  Read and agree to Terms of Service.
