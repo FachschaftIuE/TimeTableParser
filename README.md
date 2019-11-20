@@ -1,3 +1,7 @@
+---
+# THIS IS AN ALPHA - DO NOT TRUST ALL THE OUTPUTS
+---
+
 # TTP - Time Table Parser
 
 ## Deutsch
