@@ -1,10 +1,11 @@
 import json
-from classes.data_item import DataItem
 from datetime import datetime
+
+from classes.data_item import DataItem
 from helper.data_handler import create_event
 
 
-def decode_data_item(dct)->DataItem:
+def decode_data_item(dct) -> DataItem:
     """
     Summary
     -------
@@ -23,7 +24,7 @@ def decode_data_item(dct)->DataItem:
     return dct
 
 
-def data_item_from_json(data_item_list, filepath: str):
+def data_items_from_json(data_item_list, filepath: str):
     """
     Summary
     -------
@@ -34,7 +35,7 @@ def data_item_from_json(data_item_list, filepath: str):
     filename : str      # .json-filename
     """
 
-    with open(filepath, 'r', encoding="utf-8") as item_data:
+    with open(filepath, 'r', encoding="ISO-8859-1") as item_data:
         data = item_data.read()
         z = json.loads(data, object_hook=decode_data_item)
 
@@ -42,4 +43,3 @@ def data_item_from_json(data_item_list, filepath: str):
         # TODO Search better way to create list of dataitems
         create_event(data_item_list, data_item.pdf_name, data_item.module, data_item.start_datetime,
                      data_item.end_datetime, data_item.lecturer, data_item.location)
-

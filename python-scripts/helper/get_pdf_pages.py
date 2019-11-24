@@ -1,7 +1,7 @@
 from pdfquery import *
 
 
-def get_pdf_pages(filepath):
+def count_pdf_pages(filepath):
 
     """
      Summary

@@ -1,7 +1,8 @@
+from datetime import datetime
+from typing import List
+
 from classes.data_item import DataItem
 from classes.dictionary_item import DictionaryItem
-from typing import List
-from datetime import datetime
 
 
 def create_event(data: List[DataItem], pdf_name: str, module: str, start_datetime: datetime, end_datetime: datetime,
@@ -70,6 +71,29 @@ def string_to_datetime(date: str, time: str):
                              int(temp_time[0]), int(temp_time[1]), 00)
 
     return temp_datetime
+
+
+def get_module_names_from_data_items(data: List[DataItem]):
+
+    """
+    Summary
+    -------
+    Creates a list of the module names of given data items.
+
+    Parameter
+    ---------
+    data : list         # DataItem-list with events
+
+    Returns
+    -------
+    dictionary : list   # DictionaryItem-list with module id, module name and pdf name
+    """
+
+    module_names = []
+    dictionary = create_data_dictionary(data)
+    for dictionary_item in dictionary:
+        module_names.append(dictionary_item.module)
+    return module_names
 
 
 def create_data_dictionary(data: List[DataItem]):

@@ -1,17 +1,19 @@
 import csv
-import pytz
 import json
-from ics import Calendar, Event
-from datetime import datetime
-from classes.data_item import DataItem
-from typing import List
 import pathlib
+from datetime import datetime
+from typing import List
+
+import pytz
+from ics import Calendar, Event
+
+from classes.data_item import DataItem
 
 output_folder = pathlib.Path.cwd().joinpath('data', 'output')
 cache_folder = pathlib.Path.cwd().joinpath('data', 'cache')
 
-def create_csv(data: List[DataItem], filename: str = "calendar"):
 
+def create_csv(data: List[DataItem], filename: str = "calendar"):
     """
     Summary
     -------
@@ -47,7 +49,6 @@ def create_csv(data: List[DataItem], filename: str = "calendar"):
 
 
 def create_ics(data: List[DataItem], filename: str = "calendar"):
-
     """
     Summary
     -------
@@ -129,20 +130,11 @@ def create_json_from_data_item(data_item_list: List[DataItem], filename):
 
         # Create file from list
         for x in range(len(data_item_list)):
-            if data_item_list[x].pdf_name == filename:
+            if data_item_list[x].pdf_name == filename.replace('.json', '.pdf'):
                 temp_list.append(data_item_list[x])
 
         for x in range(len(temp_list)):
             json_file.writelines(temp_list[x].to_json())
-            if x < (len(temp_list)-1):
+            if x < (len(temp_list) - 1):
                 json_file.writelines(',')
         json_file.writelines(']')
-
-
-
-
-
-
-
-
-

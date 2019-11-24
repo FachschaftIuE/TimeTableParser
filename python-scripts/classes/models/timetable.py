@@ -1,11 +1,12 @@
-from .timetable_information import TimetableInformation
-from helper.regex_parser import RegexParser
-from classes.file_management.loader import Loader
 import datetime
-from .event_meta import EventMeta
+
+from classes.file_management.loader import Loader
 from classes.timetable_parts.week import Week
 from helper.data_handler import create_event, string_to_datetime
+from helper.regex_parser import RegexParser
+from .event_meta import EventMeta
 from .iterable import *
+from .timetable_information import TimetableInformation
 
 
 class Timetable:
@@ -54,7 +55,7 @@ class Timetable:
         -------
         String of current date in format YYYY-MM-DD
         """
-        
+
         total_weeks = self.__get_total_weeks_of_year()
         # Gets from - to - years, can differ in the winter semester
         years = self.__timetalbe_information.current_year
@@ -82,7 +83,7 @@ class Timetable:
     def __get_total_weeks_of_year(self):
         gemein_jahre = [2020, 2026, 2032, 2037]
         total_weeks = 52
-        if self.__timetalbe_information.current_year[0]-1 in gemein_jahre:
+        if self.__timetalbe_information.current_year[0] - 1 in gemein_jahre:
             total_weeks = 53
         return total_weeks
 
@@ -93,7 +94,7 @@ class Timetable:
         self.__weeks = dict()
         for week in self.__timetalbe_information.week_numbers:
             self.__weeks[str(week)] = (Week(self.__calculate_date_from_week_number(week), week)
-                                    .fill_days(self.__timetalbe_information.week_days_per_week))
+                                       .fill_days(self.__timetalbe_information.week_days_per_week))
 
     def find_modules(self, data: list):
         """
@@ -104,7 +105,7 @@ class Timetable:
 
         # test is a list of all horizontal lines bigger than the default date (sorry for the variable naming)
         test = RegexParser.extract_modules_pyquery_array(self.__loader.get_file(),
-                                                         (self.__timetalbe_information.single_time_stamp_width*
+                                                         (self.__timetalbe_information.single_time_stamp_width *
                                                           len(self.__timetalbe_information.time_stamp_information)),
                                                          self.__timetalbe_information.single_time_stamp_width)
 
@@ -146,7 +147,6 @@ class Timetable:
 
             # Iterate over dictionary, because one page can contain multiple weeks. Sorry for the naming
             for key, value in self.__weeks.items():
-
                 # Get current date of day
                 start_date = value.days[item.day_name].date_of_day.strftime("%d/%m/%Y")
                 start_end_time = self.__find_module_time(item)
@@ -173,13 +173,14 @@ class Timetable:
         # Return dictionary with ["end" : "end time", "start" : "start time"]
         return return_information
 
-    def __find_module_info(self, week_day_name : str, box: Box):
+    def __find_module_info(self, week_day_name: str, box: Box):
 
         module_name_box = list()
 
         # Definition of outer box, which contains strings
-        main_box = Box([box.x0, self.__timetalbe_information.week_day_information[week_day_name][1]-self.__word_margin,
-                        box.x1, self.__timetalbe_information.week_day_information[week_day_name][3]])
+        main_box = Box(
+            [box.x0, self.__timetalbe_information.week_day_information[week_day_name][1] - self.__word_margin,
+             box.x1, self.__timetalbe_information.week_day_information[week_day_name][3]])
 
         m_name_finder_initializer = ModuleNameFinder(main_box)
         m_name_finder_initializer.min_box = main_box
@@ -208,9 +209,9 @@ class Timetable:
         """
         # Iterate over PyQuery-Items
         for item in self.__loader.get_file().pq('LTTextLineHorizontal:in_bbox("'
-                                                + str(iterable.main_box.x0)+', '+str(iterable.main_box.y0)+','
-                                                + str(iterable.main_box.x1)+', '
-                                                + str(iterable.main_box.y1)+'")').items():
+                                                + str(iterable.main_box.x0) + ', ' + str(iterable.main_box.y0) + ','
+                                                + str(iterable.main_box.x1) + ', '
+                                                + str(iterable.main_box.y1) + '")').items():
             description_box = Box(RegexParser.extract_coordinates_from_bbox(item))
             iterable.get_information(BoxContent(description_box, item.text()))
 
